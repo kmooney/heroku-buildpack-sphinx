@@ -1,7 +1,7 @@
 from functools import wraps
-import os, json
-from flask import Flask, render_template, request, g, session, flash, \
-     redirect, url_for, abort, send_from_directory, request, Response
+import os
+from flask import Flask, render_template, request, g, session, \
+     redirect, url_for, send_from_directory 
 
 from flaskext.openid import OpenID
 
@@ -27,7 +27,6 @@ def check_auth():
 def requires_auth(f):
     @wraps(f)
     def decorated(*args, **kwargs):
-        auth = request.authorization
         if not check_auth():
             return redirect(url_for('login', next=request.url))
         return f(*args, **kwargs)
@@ -39,16 +38,6 @@ def requires_auth(f):
 def login():
     domain = os.environ['DOMAIN']
     return oid.try_login("https://www.google.com/accounts/o8/site-xrds?hd=%s" % domain )
-
-@oid.after_login
-def create_or_login(resp):
-    """This is called when login with OpenID succeeded and it's not
-    necessary to figure out if this is the users's first login or not.
-    This function has to redirect otherwise the user will be presented
-    with a terrible URL which we certainly don't want.
-    """
-    session['openid'] = resp.identity_url
-    return redirect(oid.get_next_url())
 
 @app.route('/logout')
 def logout():
