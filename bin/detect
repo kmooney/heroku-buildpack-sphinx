@@ -4,4 +4,5 @@
 BUILD_DIR=$1
 
 # 'Python/Django' if there is a [mysite]/settings.py file present; otherwise 'Python'
-echo Sphinx
+echo "Sphinx"
+exit 0
