@@ -32,6 +32,16 @@ def requires_auth(f):
         return f(*args, **kwargs)
     return decorated
 
+@oid.after_login
+def create_or_login(resp):
+    """This is called when login with OpenID succeeded and it's not
+    necessary to figure out if this is the users's first login or not.
+    This function has to redirect otherwise the user will be presented
+    with a terrible URL which we certainly don't want.
+    """
+    session['openid'] = resp.identity_url
+    return redirect(oid.get_next_url())
+
 
 @app.route('/login', methods=['GET', 'POST'])
 @oid.loginhandler
