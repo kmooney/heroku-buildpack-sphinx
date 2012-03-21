@@ -10,6 +10,10 @@ app.secret_key = '\xa5\x10\xbfN3\x1f\t\xd0ec\xa1\xe8\xe7B\x1dU4!\xa1N@\xcf\xfe\x
 
 oid = OpenID(app)
 
+from raven.contrib.flask import Sentry
+sentry = Sentry(app, dsn='https://c51e9f1ac5fd4dfc8c3f3bea6cd99099:5bda923b137e4f5eb928da4fb9a11579@app.getsentry.com/310')
+
+
 @app.before_request
 def before_request():
     g.user = None
