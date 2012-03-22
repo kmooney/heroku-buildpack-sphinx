@@ -74,8 +74,8 @@ def stuff(filename):
         f = open("templates/"+filename+".html")
         return "".join(f.readlines())
     elif filename.find(".html") != -1:
-        f = open(filename)
-        return "".join("templates/"+f.readlines()) 
+        f = open("templates/"+filename)
+        return "".join(f.readlines()) 
     return send_from_directory('templates', filename)
 
 if __name__ == '__main__':
