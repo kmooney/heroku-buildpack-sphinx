@@ -1,6 +1,6 @@
 from functools import wraps
 import os
-from flask import Flask, render_template, request, g, session, \
+from flask import Flask, request, g, session, \
      redirect, url_for, send_from_directory 
 
 from flaskext.openid import OpenID
@@ -61,17 +61,21 @@ def logout():
 @app.route('/')
 @requires_auth
 def index():
-    return render_template("index.html")
+    f = open("index.html")
+    return "".join(f.readlines())
     
 @app.route('/<path:filename>')
 @requires_auth
 def stuff(filename):
     if filename.endswith("/"):
-        return render_template(filename + "index.html")        
+        f = open(filename+"index.html")
+        return "".join(f.readlines())
     if filename.find(".") == -1:
-        return render_template(filename + ".html")
+        f = open(filename+".html")
+        return "".join(f.readlines())
     elif filename.find(".html") != -1:
-        return render_template(filename)
+        f = open(filename)
+        return "".join(f.readlines()) 
     return send_from_directory('templates', filename)
 
 if __name__ == '__main__':
