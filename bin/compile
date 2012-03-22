@@ -93,6 +93,7 @@ source bin/activate
 pip install sphinx --use-mirrors
 pip install oauth2==1.5.211 Flask==0.8 Flask-OpenID==1.0.1 --use-mirrors
 pip install --upgrade -e git+http://github.com/adieu/python-openid#egg=python-openid
+pip install --upgrade blinker
 pip install --upgrade raven
 CONF_FILE=$(find . -name 'conf.py' | head -1)
 PROJECT=$(dirname $CONF_FILE)
