@@ -61,21 +61,21 @@ def logout():
 @app.route('/')
 @requires_auth
 def index():
-    f = open("index.html")
+    f = open("templates/index.html")
     return "".join(f.readlines())
     
 @app.route('/<path:filename>')
 @requires_auth
 def stuff(filename):
     if filename.endswith("/"):
-        f = open(filename+"index.html")
+        f = open("templates/"+filename+"index.html")
         return "".join(f.readlines())
     if filename.find(".") == -1:
-        f = open(filename+".html")
+        f = open("templates/"+filename+".html")
         return "".join(f.readlines())
     elif filename.find(".html") != -1:
         f = open(filename)
-        return "".join(f.readlines()) 
+        return "".join("templates/"+f.readlines()) 
     return send_from_directory('templates', filename)
 
 if __name__ == '__main__':
